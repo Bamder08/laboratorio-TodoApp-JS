@@ -13,5 +13,14 @@ const state = {
         new Todo('Hacer ejercicio'),
         new Todo('Leer un libro'),
     ], 
-    filter: Fileters.All,
+    filter: Filters.All,
+}
+
+const initStore = () => {
+    console.log(state);
+    console.log('Init Store');
+}
+
+export default {
+    initStore,
 }
