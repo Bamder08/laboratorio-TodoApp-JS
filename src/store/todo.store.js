@@ -78,10 +78,11 @@ const deleteCompleted = () => {
 
 /**
  * 
- * @param {String} newFilter 
+ * @param {Filters} newFilter 
  */
 const setFilter = (newFilter = Filters.All) => {
-    throw new Error('Not implemented');
+    Object.keys(Filters).includes(newFilter) || new Error(`Option ${newFilter} is not valid`);
+    state.filter = newFilter;
 }
 
 /**
