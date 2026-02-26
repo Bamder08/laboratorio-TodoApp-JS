@@ -43,7 +43,6 @@ const getTodos = (filter = Filters.All) => {
   
         default:
             throw new Error(`Option ${filter} is not valid`);
-            break;
     }
 }
 
