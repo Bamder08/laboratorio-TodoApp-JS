@@ -8,11 +8,7 @@ const Filters = {
 }
 
 const state = {
-    todos: [
-        new Todo('Comprar leche'),
-        new Todo('Hacer ejercicio'),
-        new Todo('Leer un libro'),
-    ], 
+    todos: [], 
     filter: Filters.All,
 }
 
