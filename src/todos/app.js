@@ -5,6 +5,7 @@ import { renderTodos } from './uses-cases';
 const ElementIDs = {
     TodoList: '.todo-list',
     NewTodoInput: '#new-todo-input',
+    todoDelete: '.destroy',
 }
 
 /**
@@ -29,6 +30,7 @@ export const App = (elementId) => {
     // Referencias HTML
     const newDescriptionInput = document.querySelector(ElementIDs.NewTodoInput);
     const todoListUl = document.querySelector(ElementIDs.TodoList);
+    const todoDeleteBtn = document.querySelector(ElementIDs.todoDelete);
 
     // Listeners
     newDescriptionInput.addEventListener('keyup', (event) => {
@@ -39,9 +41,21 @@ export const App = (elementId) => {
         displayTodos();
         event.target.value = ''; // Limpiar el input después de agregar el todo
     });
+
     todoListUl.addEventListener('click', (event) => {
         const element = event.target.closest('[data-id]'); // Busca el elemento más cercano que tenga el atributo data-id
         todoStore.toggleTodo(element.getAttribute('data-id')); // Obtiene el valor del atributo data-id y lo pasa a la función toggleTodo del store
         displayTodos();
     })
+
+    todoListUl.addEventListener('click', (event) => {
+        const element = event.target.classList.contains('destroy')
+            ? event.target.closest('[data-id]') // Si el elemento clickeado tiene la clase 'destroy', busca el elemento más cercano con el atributo data-id
+            : null; // Si no, asigna null
+        if(!element) return;
+
+        todoStore.deleteTodo(element.getAttribute('data-id')); // Obtiene el valor del atributo data-id y lo pasa a la función deleteTodo del store
+        displayTodos();
+    })
+    
 }
