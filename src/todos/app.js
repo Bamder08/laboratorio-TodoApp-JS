@@ -31,6 +31,10 @@ export const App = (elementId) => {
 
     // Listeners
     newDescriptionInput.addEventListener('keyup', (event) => {
-        console.log(event);
+        if(event.keyCode !== 13) return; // Si el código de la tecla presionada no es 13 (Enter), no hacer nada
+        if(event.target.value.trim().length === 0) return;
+
+        todoStore.addTodo(event.target.value);
+        event.target.value = ''; // Limpiar el input después de agregar el todo
     });
 }
