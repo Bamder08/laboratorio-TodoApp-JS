@@ -6,6 +6,7 @@ const ElementIDs = {
     TodoList: '.todo-list',
     NewTodoInput: '#new-todo-input',
     todoDelete: '.destroy',
+    clearCompleted: '.clear-completed',
 }
 
 /**
@@ -30,6 +31,7 @@ export const App = (elementId) => {
     // Referencias HTML
     const newDescriptionInput = document.querySelector(ElementIDs.NewTodoInput);
     const todoListUl = document.querySelector(ElementIDs.TodoList);
+    const clearCompletedButton = document.querySelector(ElementIDs.clearCompleted);
 
     // Listeners
     newDescriptionInput.addEventListener('keyup', (event) => {
@@ -54,5 +56,10 @@ export const App = (elementId) => {
         todoStore.deleteTodo(element.getAttribute('data-id')); // Obtiene el valor del atributo data-id y lo pasa a la función deleteTodo del store
         displayTodos();
     })
+
+    clearCompletedButton.addEventListener('click', (event) => {
+        todoStore.deleteCompleted();
+        displayTodos();
+    });
     
 }
