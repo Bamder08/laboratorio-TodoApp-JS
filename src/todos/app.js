@@ -1,12 +1,15 @@
-import todoStore from '../store/todo.store';
+import todoStore, { Filters } from '../store/todo.store';
 import html from './app.html?raw'; // El ?raw es para que se importe el contenido del archivo html como un string, en lugar de ser tratado como un módulo o recurso.
-import { renderTodos } from './uses-cases';
+import { renderTodos } from './uses-cases/render-todos';
+import { renderPending } from './uses-cases/render-pending';
 
 const ElementIDs = {
     TodoList: '.todo-list',
     NewTodoInput: '#new-todo-input',
     todoDelete: '.destroy',
     clearCompleted: '.clear-completed',
+    todoFilters: '.filtro',
+    pendingCount: '#pending-count'
 }
 
 /**
@@ -18,6 +21,11 @@ export const App = (elementId) => {
     const displayTodos = () => {
         const todos = todoStore.getTodos(todoStore.getCurrentFilter());
         renderTodos(ElementIDs.TodoList, todos);
+        updatePendingCount();
+    }
+
+    const updatePendingCount = () => {
+        renderPending(ElementIDs.pendingCount);
     }
 
     // Cuando la funcion App sea ejecutada o se llama, se va a ejecutar esta función anónima
@@ -32,6 +40,8 @@ export const App = (elementId) => {
     const newDescriptionInput = document.querySelector(ElementIDs.NewTodoInput);
     const todoListUl = document.querySelector(ElementIDs.TodoList);
     const clearCompletedButton = document.querySelector(ElementIDs.clearCompleted);
+    const filtersLIs = document.querySelectorAll(ElementIDs.todoFilters);
+    const pendingCountLabel = document.querySelector(ElementIDs.pendingCount);
 
     // Listeners
     newDescriptionInput.addEventListener('keyup', (event) => {
@@ -61,5 +71,31 @@ export const App = (elementId) => {
         todoStore.deleteCompleted();
         displayTodos();
     });
+
+    filtersLIs.forEach(element => {
+        element.addEventListener('click', (element) => {
+            filtersLIs.forEach(el => el.classList.remove('selected')); 
+            element.target.classList.add('selected');
+
+            switch (element.target.text) {
+                case 'Todos':
+                    todoStore.setFilter(Filters.All);
+                    break;
+                case 'Pendientes':
+                    todoStore.setFilter(Filters.Pending);
+                    break;
+                case 'Completados':
+                    todoStore.setFilter(Filters.Completed);
+                    break;
+                default:
+                    break;
+            }
+            displayTodos();
+        })
+
+        
+    })
+
+
     
 }
