@@ -4,8 +4,8 @@ Aplicación de lista de tareas (TodoApp) desarrollada con JavaScript puro, enfoc
 
 ---
 
-## 🚀 Demo
-👉 Próximamente disponible (deploy en proceso)
+## 🚀 Deploy
+https://laboratorio-todo-app.netlify.app
 
 ---
 
